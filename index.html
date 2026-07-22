@@ -1,13 +1,104 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>epicsite</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="assets/playbutton.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EpicTab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=Michroma&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="app">
+    <p id="timeElement">Time</p>
+    <p id="date">Date</p>
+    <form action="https://www.google.com/search" method="GET" id="searchWeb"> <input id="searchIn" style="color: white;"
+        type="search" name="q" placeholder="Search Google..." required>
+      <!-- <button id="searchBtn" type="submit"><imgSearch</button> --> </form>
+    <div id="bookmarks"> 
+      <!-- <button id="gDocs" class="bookmark">Google Docs</button>  -->
+      <div id="createContainer">
+        <button id="createBook" class="bookmark">+</button>
+        <p id="createtext">Create new bookmark</p>
+        
+        <div id="bookmarkMaker">
+          <form id="bookmarknew"> 
+            <input type="text" id="urlinput" class="bookBtn" placeholder="Website URL..." required> 
+            <input type="text" id="nameInput" class="bookBtn" placeholder="Website Name..." required> 
+            <div id="buttonrow">
+              <button id="addmark" type="submit" class="bookBtn">Add</button> 
+              <button id="cancelmark" type="button" class="bookBtn">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div id="apod">
+      <details id="caption">
+        <summary>Show full caption</summary>
+        <p id="info"></p>
+      </details>
+      <div id="apodimg">
+        <p id="apoddisplay"></p>
+      </div>
+      <p id="apodtitle"></p>
+    </div>
+
+
+    <div id="timer">
+      <div id="progressbar">
+        <div id="bar"></div>
+      </div>
+      <input class="timein" type="number" id="hour" min="0" placeholder="hr"></input>
+      <h2 class="colon"> : </h2>
+      <input class="timein" type="number" id="min" min="0" max="59" placeholder="min"></input>
+      <h2 class="colon"> : </h2>
+      <input class="timein" type="number" id="sec" min="0" max="59" placeholder="sec"></input>
+      <div class="buttons">
+        <button id="start" type="button"><img src="assets/playbutton.png"></button>
+        <button id="reset" type="button"><img src="assets/reseticong.png"></button>
+      </div>
+    </div>
+
+    <div id="weatherdisplayA">
+      <div id="tempOnly">
+        <img id="currentIcon" class="currentWeatherIcon" src="">
+        <p id="currenttemp"></p>
+      </div>
+      <details id="moreWeather">
+        <summary>Expand</summary>
+        <div id="sun">
+            <p id="sunrise"></p>
+            <p id="sunset"></p>
+        </div>
+        <div id="temperaturea">
+            
+            <p id="maxtemp"></p>
+            <p id="mintemp"></p>
+        </div>
+        <div id="rainstuff">
+            <p id="perceptprob"></p>
+            <p id="rainsum"></p>
+        </div>
+      </details>
+      
+    </div>
+    
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
 </html>
+        <!-- <label for="cars">Choose a car:</label>
+        <select name="cars" id="cars">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="mercedes">Mercedes</option>
+          <option value="audi">Audi</option>
+        </select> -->
