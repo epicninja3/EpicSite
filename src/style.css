@@ -116,6 +116,7 @@ body{
 }
 .dynamic-bookmark:hover .deleteBtn{
     display: block;
+    font-family: "Nunito";
 }
 .deleteBtn img{
     width: 20px;
@@ -265,7 +266,7 @@ body{
     flex-direction: column;
     position: relative;
     width: 300px;
-    height: 200px;
+    height: 190px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -273,7 +274,7 @@ body{
     border: none;
     /* bottom: 0px; */
     left: 12px;
-    top: 10px;
+    top: 25px;
     z-index: 5;
 
 }
@@ -395,6 +396,9 @@ body{
     /* display:flex; */
     text-align: center;
     left: 0px;
+    font-family: "Nunito";
+    font-size: 13px;
+    font-weight: bolder;
 
     /* justify-content:center;
     text-align:center; */
@@ -677,7 +681,238 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 
+/* -------------- */
+/* Flight Tracker */
+/* -------------- */
 
+#flightContainer{
+    
+    position: absolute;
+    
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    bottom: 20px;
+    left: 10px;
+    /* left: 50%;
+    transform: translate(-50%, 0); */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);              
+    border-radius: 16px;
+    width: 260px;
+    height: 280px;
+    
+    
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#flightInput{
+    position: absolute;
+    top: 30px;
+    width: 130px;
+    height: 30px;
+    left: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    background: rgba(241, 240, 240, 0.187);
+    backdrop-filter: blur(10px);
+    color: black;
+    font-size: 15px;
+    outline: none;
+    transition: all .25s ease;
+    text-align: center;
+    font-family: "Audiowide";
+
+}
+#flightInput::placeholder{
+    
+    color: rgb(53, 52, 52);
+    text-align: center;
+}
+
+#header{
+    position: absolute;
+    margin-top:7px;
+    left: 10px;
+    font-family: "Nunito";
+}
+#findflight{
+    position: absolute;
+    top: 30px;
+    width: 50px;
+    height: 30px;
+    left: 150px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    background: rgba(241, 240, 240, 0.187);
+    backdrop-filter: blur(10px);
+    color: black;
+    font-size: 15px;
+    outline: none;
+    transition: all .25s ease;
+    text-align: center;
+    font-family: "Nunito";
+}
+#flightinfo{
+    visibility: hidden;
+
+    border-radius:12px;
+
+    background:transparent;
+
+    
+    position: absolute;
+    bottom: 5px;
+    
+    width: 250px;
+    height: 200px;
+    left: 50%;
+    transform: translate(-50%,0);
+    font-family: "Nunito";
+}
+#depart{
+    margin-top: -8px;
+    font-size: 30px;
+    font-family: "Nunito";
+}
+#departcity{
+    margin-top: -32px;
+    font-size: 13px;
+    width: 90px;
+    margin-left: 0px;
+    align-self:center;
+    
+    text-align: center;
+    font-family: "Nunito";
+    line-height: 1;
+}
+#departtime{
+    position: absolute;
+    
+    align-self: center;
+    top: 50px;
+    font-size: 13px;
+    font-family: "Nunito";
+}
+#planeimg{
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translate(-55%,10%);
+    width: 70px;
+    height: 70px;
+}
+#arrival{
+    margin-top: -8px;
+    font-size: 30px;
+    font-family: "Nunito";
+}
+#arrivaltime{
+    position: absolute;
+    padding-left: 3px;
+    padding-right: 3px;
+    align-self: center;
+    font-size: 13px;
+    top: 50px;
+    font-family: "Nunito";
+}
+#arrivecity{
+    margin-top: -32px;
+    font-size: 13px;
+    width: 90px;
+    margin-left: 0px;
+    align-self:center;
+    
+    text-align: center;;
+    font-family: "Nunito";
+    line-height: 1;
+    
+}
+
+#airlines{
+    
+    position: absolute;
+    margin-top: 0px;
+    left: 0px;
+    font-size: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    background: rgba(241, 240, 240, 0.187);
+    backdrop-filter: blur(10px);
+    padding: 2px;
+
+}
+#aircraftmodel{
+    position: absolute;
+    margin-top: 50px;
+    left: 0px;
+    padding: 2px;
+    font-size: 20px;
+    width: 160px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    background: rgba(241, 240, 240, 0.187);
+    backdrop-filter: blur(10px);
+}
+#status{
+    position: absolute;
+    
+    padding: 2px;
+    right:0px;
+    width: 60px;
+    height: 60px;
+    
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    background: rgba(241, 240, 240, 0.187);
+    backdrop-filter: blur(10px);
+    text-align:center;
+    margin-top: 15px;
+}
+#general{
+    width: 250px;
+    
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+    top: 110px;
+    left: 0px;
+    height: 90px
+}
+#departure{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    margin-top: 0px;
+    left:5px;
+    /* border: 1px solid black; */
+    height: 90px;
+    width: 80px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 5px;
+    background: rgba(241, 240, 240, 0.187);
+    backdrop-filter: blur(10px);
+}
+#arriving{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    margin-top: 0px;
+    right:5px;
+    height: 90px;
+    width: 80px;
+    /* border: 1px solid black; */
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 5px;
+    background: rgba(241, 240, 240, 0.187);
+    backdrop-filter: blur(10px);
+}
 
 
 
@@ -689,6 +924,14 @@ input[type="number"]::-webkit-inner-spin-button {
 /* ----- */
 /* Fonts */
 /* ----- */
+
+.nunito-font {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 10;
+  font-style: normal;
+}
+
 
 .elms-sans-font {
   font-family: "Elms Sans", sans-serif;

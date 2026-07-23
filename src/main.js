@@ -77,10 +77,10 @@ function showBookmarks() {
     const newButton = document.createElement('a');
     newButton.href = item.url;
     newButton.target = "_blank";
-    // newButton.textContent = item.name;
+    
     const text = document.createElement("span");
     text.textContent = item.name;
-    text.style.fontFamily = "Elms Sans";
+    text.style.fontFamily = "Nunito";
     text.style.fontSize = "20px";
     const deleteBtn = document.createElement('button');
     
@@ -300,7 +300,8 @@ async function getWeather(){
         let day ="";
         let dayhigh = 0;
         const codeb = weatherData.current.weather_code;
-        const iconb = weatherIcon(codeb);
+        const isDay = weatherData.current.is_day;
+        const iconb = weatherIcon(codeb, isDay);
         const localTime = new Date().toLocaleTimeString("en-US", {
           timeZone: weatherData.timezone,
           hour: "numeric",
@@ -308,10 +309,10 @@ async function getWeather(){
           hour12: true
         });
         
-    function weatherIcon(code, isDay){
+    function weatherIcon(code, is_day){
       switch(code){
         case 0:
-          return isDay
+          return is_day
           ? "https://cdn.meteocons.com/3.0.0-next.10/svg/fill/clear-day.svg"
           : "https://cdn.meteocons.com/3.0.0-next.10/svg/fill/clear-night.svg";
         case 1:
@@ -390,8 +391,13 @@ async function getWeather(){
 
 
   function error() {
-        alert("Location permission denied.");
-    }
+    alert("Location permission denied.");
+    document.getElementById("currenttemp").innerHTML = "Location permission denied";
+    document.getElementById("currenttemp").style.fontSize = "15px";
+    document.getElementById("currenttemp").style.marginLeft = "-40px";
+    document.getElementById("currenttemp").style.marginTop = "10px";
+    document.getElementById("currentIcon").style.visibility = "hidden";
+  }
 }
 
 getWeather();
@@ -403,3 +409,287 @@ getWeather();
 //         getWeather(city);
 //     }
 // });
+
+// --------------
+// Flight Tracker
+// --------------
+
+
+const FLIGHT_API_KEY = import.meta.env.VITE_AIRLAB_API_KEY;
+
+
+
+const flightInput = document.getElementById("flightInput");
+const findFlight = document.getElementById("findflight");
+const aircraftmodel = document.getElementById("aircraftmodel");
+const airlines = document.getElementById("airlines");
+const arrival = document.getElementById("arrival");
+const depart = document.getElementById("depart");
+const departCity = document.getElementById("departcity");
+const arriveCity = document.getElementById("arrivecity");
+const departtime = document.getElementById("departtime");
+const arrivaltime = document.getElementById("arrivaltime");
+const status = document.getElementById("status");
+
+
+findFlight.addEventListener('click', function(){
+  const flightNumber = flightInput.value.trim();
+
+  if (flightNumber) {
+      getFlight(flightNumber);
+  }
+});
+
+async function getFlight(flightNumber) {
+  try {
+
+    const url = 
+    `https://airlabs.co/api/v9/flight?` +
+    `api_key=${FLIGHT_API_KEY}` +
+    `&flight_iata=${flightNumber}`;
+
+
+    const response = await fetch(url);
+
+    const data = await response.json();
+    const flight = data.response;
+    if (!flight) {
+      console.log(data);
+      alert("Flight not found");
+      return;
+    }
+
+    // const aircraftURL =
+    // `https://airlabs.co/api/v9/aircraft?` +
+    // `api_key=${FLIGHT_API_KEY}` +
+    // `&reg_number=${flight.reg_number}`;
+    // const responseb = await fetch(aircraftURL);
+
+    // const datab = await responseb.json();
+    // console.log("Flight data:", data);
+    // console.log("Aircraft data:", datab);
+    // const plane = datab.response;
+    const aircraftCodes = {
+      // Airbus A320 Family
+      "A318": "Airbus A318",
+      "A319": "Airbus A319",
+      "A320": "Airbus A320",
+      "A20N": "Airbus A320neo",
+      "A321": "Airbus A321",
+      "A21N": "Airbus A321neo",
+      "A332": "Airbus A330-200",
+      "A333": "Airbus A330-300",
+      "A339": "Airbus A330-900neo",
+      "A342": "Airbus A340-200",
+      "A343": "Airbus A340-300",
+      "A345": "Airbus A340-500",
+      "A346": "Airbus A340-600",
+      "A359": "Airbus A350-900",
+      "A35K": "Airbus A350-1000",
+      "A388": "Airbus A380",
+
+      // Boeing 737 Family
+      "B731": "Boeing 737-100",
+      "B732": "Boeing 737-200",
+      "B733": "Boeing 737-300",
+      "B734": "Boeing 737-400",
+      "B735": "Boeing 737-500",
+      "B736": "Boeing 737-600",
+      "B737": "Boeing 737-700",
+      "B738": "Boeing 737-800",
+      "B739": "Boeing 737-900",
+      "B37M": "Boeing 737 MAX 7",
+      "B38M": "Boeing 737 MAX 8",
+      "B39M": "Boeing 737 MAX 9",
+      "B3XM": "Boeing 737 MAX 10",
+
+      // Boeing 747 Family
+      "B741": "Boeing 747-100",
+      "B742": "Boeing 747-200",
+      "B743": "Boeing 747-300",
+      "B744": "Boeing 747-400",
+      "B748": "Boeing 747-8",
+
+      // Boeing 757 Family
+      "B752": "Boeing 757-200",
+      "B753": "Boeing 757-300",
+
+      // Boeing 767 Family
+      "B762": "Boeing 767-200",
+      "B763": "Boeing 767-300",
+      "B764": "Boeing 767-400",
+
+      // Boeing 777 Family
+      "B772": "Boeing 777-200",
+      "B77L": "Boeing 777-200LR",
+      "B773": "Boeing 777-300",
+      "B77W": "Boeing 777-300ER",
+
+      // Boeing 787 Dreamliner
+      "B788": "Boeing 787-8 Dreamliner",
+      "B789": "Boeing 787-9 Dreamliner",
+      "B78X": "Boeing 787-10 Dreamliner",
+
+      // Boeing 717
+      "B712": "Boeing 717",
+
+      // Embraer Regional Jets
+      "E135": "Embraer ERJ-135",
+      "E145": "Embraer ERJ-145",
+      "E170": "Embraer E170",
+      "E75L": "Embraer E170",
+      "E175": "Embraer E175",
+      "E190": "Embraer E190",
+      "E195": "Embraer E195",
+      "E290": "Embraer E190-E2",
+      "E295": "Embraer E195-E2",
+
+      // Bombardier / Mitsubishi Regional
+      "CRJ1": "Bombardier CRJ-100",
+      "CRJ2": "Bombardier CRJ-200",
+      "CRJ7": "Bombardier CRJ-700",
+      "CRJ9": "Bombardier CRJ-900",
+      "CRJX": "Bombardier CRJ-1000",
+
+      // ATR Turboprops
+      "AT43": "ATR 42-300",
+      "AT45": "ATR 42-500",
+      "AT46": "ATR 42-600",
+      "AT72": "ATR 72",
+
+      // De Havilland
+      "DH8A": "Dash 8-100",
+      "DH8B": "Dash 8-200",
+      "DH8C": "Dash 8-300",
+      "DH8D": "Dash 8 Q400",
+
+      // Smaller private/business aircraft
+      "C172": "Cessna 172",
+      "C208": "Cessna Caravan",
+      "GL5T": "Gulfstream G550",
+      "GL7T": "Gulfstream G700",
+      "GLEX": "Bombardier Global Express",
+      "PC12": "Pilatus PC-12"
+    };
+    
+    // const arrival = new Date(flight.arr_time_utc.replace(" ", "T") + "Z");
+    const now = new Date();
+
+    if (flight.arr_estimated_utc) {
+        const arrivalTime = new Date(flight.arr_estimated_utc.replace(" ", "T") + "Z");
+
+        const diff = arrivalTime - now;
+
+        if (diff > 0) {
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            arrivaltime.innerHTML = `Landing in ${hours}h ${minutes}m`;
+        } else {
+            arrivaltime.innerHTML = "Arrived";
+        }
+
+        console.log("Arrival:", arrivalTime.toString());
+        console.log("Arrival UTC:", arrivalTime.toISOString());
+      }else{
+        arrivaltime.innerHTML = "Arrived";
+      }
+
+
+    if (flight.dep_actual_utc) {
+        const departureTime = new Date(flight.dep_actual_utc.replace(" ", "T") + "Z");
+
+        const diff = now - departureTime;
+
+        if (diff > 0) {
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            departtime.innerHTML = `Departed ${hours}h ${minutes}m ago`;
+        } else {
+            departtime.innerHTML = "Not departed";
+        }
+
+        console.log("Departure:", departureTime.toString());
+        console.log("Departure UTC:", departureTime.toISOString());
+    }
+    
+    let aircraft = flight.model || aircraftCodes[flight.aircraft_icao] || "Unavailable";
+    aircraft = aircraft.replace(/\s*\([^)]*\)/g, "");
+    // console.log("Local time:", new Date().toString());
+    // console.log("UTC time:", new Date().toISOString());
+
+    
+    
+    // console.log({
+    //   dep_time: flight.dep_time,
+    //   arr_time: flight.arr_time,
+    //   dep_time_utc: flight.dep_time_utc,
+    //   arr_time_utc: flight.arr_time_utc,
+    //   dep_iata: flight.dep_iata,
+    //   arr_iata: flight.arr_iata,
+    //   status: flight.status
+    // });
+
+    console.log(flight);
+    
+    document.getElementById("flightinfo").style.visibility = "visible";
+    
+    aircraftmodel.innerHTML = `${aircraft}`;
+    airlines.innerHTML = `${flight.airline_name || "Unavailable"}`;
+    depart.innerHTML = `${flight.dep_iata || "Unavailable"}` ;
+    departCity.innerHTML = `<strong>${flight.dep_city}`;
+    arrival.innerHTML = `${flight.arr_iata || "Unavailable"}`;
+    arriveCity.innerHTML = `<strong>${flight.arr_city}`;
+    status.innerHTML = `Status: ${flight.status}`;
+
+
+  } catch(error) {
+      console.error("Flight error:", error);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// fetch(`https://airlabs.co/api/v9/flight?api_key=${FLIGHT_API_KEY}`)
+//   .then(response => response.json())
+//   .then(data => {
+//     console.log(data)
+//       // const flighturl = data.url;
+//       // apodDisplay.style.backgroundImage = `url(${apodurl})`;
+//       // apodinfo.innerHTML = data.explanation;
+//       // apodTitle.innerHTML = data.title;
+//   })
+//   .catch(error => {
+//     console.error(error);
+//   });
+
+
+
+
+
+
+
+
+
+
+// HttpRequest request = HttpRequest.newBuilder()
+//   .uri(URI.create("http://airlabs.co/api/v9/ping?api_key=36e77f48-7d71-442d-ab05-e5f5b8974b57"))
+//   .method("GET", HttpRequest.BodyPublishers.noBody())
+//   .build();
+
+// HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+
+// System.out.println(response.body());
