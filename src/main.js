@@ -612,6 +612,32 @@ async function getFlight(flightNumber) {
 
         console.log("Departure:", departureTime.toString());
         console.log("Departure UTC:", departureTime.toISOString());
+    } else if(flight.dep_time_utc) {
+      const departureTime = new Date(flight.dep_time_utc.replace(" ", "T") + "Z");
+
+      const diff = now - departureTime;
+
+      if (diff > 0) {
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+          departtime.innerHTML = `Departed ${hours}h ${minutes}m ago`;
+      } else {
+          departtime.innerHTML = "Not departed";
+      }
+    } else{
+      const departureTime = new Date(flight.dep_time.replace(" ", "T") + "Z");
+
+      const diff = now - departureTime;
+
+      if (diff > 0) {
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+          departtime.innerHTML = `Departed ${hours}h ${minutes}m ago`;
+      } else {
+          departtime.innerHTML = "Not departed";
+      }
     }
     
     let aircraft = flight.model || aircraftCodes[flight.aircraft_icao] || "Unavailable";
