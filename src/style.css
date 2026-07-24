@@ -274,7 +274,7 @@ body{
     border: none;
     /* bottom: 0px; */
     left: 12px;
-    top: 25px;
+    top: 20px;
     z-index: 5;
 
 }
@@ -325,7 +325,7 @@ body{
 
 #caption{
     position: absolute;
-    top: 260px;
+    top: 250px;
     left: 10px;
     
     z-index: 3;
