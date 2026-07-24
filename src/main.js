@@ -179,11 +179,13 @@ const min = document.getElementById("min");
 const sec = document.getElementById("sec");
 const start = document.getElementById("start");
 const reset = document.getElementById("reset");
-
+const pause = document.getElementById("pause");
 
 let countdown;
 let totalSeconds = 0;
 let timeLeft = 0;
+// let resume = true;
+let isPaused = false;
 
 function startTime(){
   let h = parseInt(hour.value) || 0;
@@ -212,38 +214,42 @@ function startTime(){
     return;
   }
   else if (totalSeconds > 0){
-    clearInterval(countdown)
-    countdown = setInterval(() =>{
-      
-      s--;
-      timeLeft--;
-      var percent = (timeLeft / totalSeconds) * 100;
-      bar.style.width = percent + "%";
-      if (percent == 0){
-        bar.style.width = "0%";
+    if (!isPaused){
+      clearInterval(countdown)
+      countdown = setInterval(() =>{
         
-      };
-      // sec - 1;
-      if (s < 0){
-        m--;
-        s = 59;
-        // min -1
-      };
-      if (m < 0){
-        h--;
-        m = 59;
-        // hour - 1
-      };
-      hour.value = h;
-      min.value = m;
-      sec.value = s;
+        s--;
+        timeLeft--;
+        var percent = (timeLeft / totalSeconds) * 100;
+        bar.style.width = percent + "%";
+        if (percent == 0){
+          bar.style.width = "0%";
+          
+        };
+        // sec - 1;
+        if (s < 0){
+          m--;
+          s = 59;
+          // min -1
+        };
+        if (m < 0){
+          h--;
+          m = 59;
+          // hour - 1
+        };
+        hour.value = h;
+        min.value = m;
+        sec.value = s;
 
-      if (h === 0 && m === 0 && s === 0){
-        clearInterval(countdown);
-        console.log("done");
-      };
+        if (h === 0 && m === 0 && s === 0){
+          clearInterval(countdown);
+          console.log("done");
+        };
 
-    }, 1000);
+      }, 1000);
+    } else if (isPaused){
+      console.log("paused")
+    }
   };
 };
 
@@ -251,6 +257,7 @@ function startTime(){
 start.addEventListener('click', function(){
   bar.style.width = "100%";
   
+  isPaused = false;
   startTime();
 });
 reset.addEventListener('click', function(){
@@ -259,8 +266,10 @@ reset.addEventListener('click', function(){
   min.value = 0;
   sec.value = 0;
   bar.style.width = "0%";
-
 });
+pause.addEventListener('click', function(){
+  isPaused = true;
+})
 
 // -------------
 // Weather Stuff

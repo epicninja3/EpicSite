@@ -4,6 +4,10 @@
     initial-value: 100%;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body{
     background-image: url('https://static.vecteezy.com/system/resources/thumbnails/066/625/773/small/serene-abstract-green-landscape-art-with-gentle-flowing-hills-and-valleys-painted-in-shades-of-green-capturing-nature-s-tranquility-background-texture-with-funky-vibes-photo.jpg');
     background-repeat: no-repeat;
